@@ -12,6 +12,7 @@ library(tidyverse)
 library(mosaic)
 library(gmodels)
 library(knitr)
+library(pander)
 ```
 
 
@@ -28,6 +29,10 @@ mensResults$Race = as.factor(mensResults$Race)
 head(mensResults)
 ```
 
+```{r, results = 'asis'}
+stats = favstats(Age ~ Race,data=mensResults)
+pander(stats)
+```
 
 ```{r}
 bwplot(Race ~Age,data=mensResults)
@@ -38,6 +43,10 @@ bwplot(Race ~Age,data=mensResults)
 ## One-way ANOVA
 
 We fit the one way analysis of variance (ANOVA) model, using all of the groups.
+
+```{r}
+densityplot(~Age,data=mensResults)
+```
 
 ```{r}
 densityplot(~Age,groups = Race,data=mensResults)
