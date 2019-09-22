@@ -33,14 +33,15 @@ head(mensResults)
 bwplot(Race ~Age,data=mensResults)
 ```
 
-```{r}
-densityplot(~Age,groups = Race,data=mensResults)
-```
+
 
 ## One-way ANOVA
 
 We fit the one way analysis of variance (ANOVA) model, using all of the groups.
 
+```{r}
+densityplot(~Age,groups = Race,data=mensResults)
+```
 ```{r}
 anova(lm(Age ~ Race, data=mensResults))
 ```
