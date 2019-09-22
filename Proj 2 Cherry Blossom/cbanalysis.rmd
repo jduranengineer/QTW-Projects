@@ -13,20 +13,33 @@ library(mosaic)
 library(gmodels)
 library(knitr)
 library(pander)
+library(RColorBrewer)
 ```
 
 
 ## Analysis
 
 ```{r}
-mensResults = read.csv(paste0("./MensResults",1999,".csv"),stringsAsFactors = FALSE)
-for(year in 2000:2014){
-  data = read.csv(paste0("./MensResults",year,".csv"),stringsAsFactors = FALSE)
-  mensResults = rbind(mensResults,data)
+files = sapply(1999:2014,function(year){paste0("./MensResults",year,".csv")})
+load.files = function(fileName) {
+  read.csv(fileName,stringsAsFactors = FALSE)
 }
+mensResults = do.call(rbind,lapply(files, load.files))
+
+## Convertto number
 mensResults$Age = as.numeric(mensResults$Age)
+
+## Convert to factor
+mensResults$Race = lapply(mensResults$Race,function(x) { r = strsplit(x, " ")}[[1]][1])
 mensResults$Race = as.factor(mensResults$Race)
-head(mensResults)
+
+pander(head(mensResults))
+```
+
+
+```{r}
+plot(Time ~ age, data = mensResults, ylim = c(40, 180),
+     xlab = "Age (years)", ylab = "Run Time (minutes)")
 ```
 
 ```{r, results = 'asis'}
@@ -38,7 +51,12 @@ pander(stats)
 bwplot(Race ~Age,data=mensResults)
 ```
 
+```{r}
 
+smoothScatter(y = mensResults$Race, x = mensResults$Age,
+              
+              xlab = "Age (years)", ylab = "Race")
+```
 
 ## One-way ANOVA
 
