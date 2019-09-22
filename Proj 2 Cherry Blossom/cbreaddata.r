@@ -39,3 +39,4 @@ getAll = function () {
 
   write.csv(mensResults, file = "MensResults.csv")
 }
+

@@ -1,0 +1,26 @@
+---
+title: "Cherry Blossom Q 10"
+author: "Daniel Byrne"
+date: "9/21/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rvest)
+library(tidyverse)
+library(mosaic)
+
+```
+
+
+## Analysis
+
+```{r}
+mensResults = read.csv(paste0("./MensResults",1999,".csv"),stringsAsFactors = FALSE)
+for(year in 2000:2014){
+  data = read.csv(paste0("./MensResults",year,".csv"),stringsAsFactors = FALSE)
+  mensResults = rbind(mensResults,data)
+}
+
+```
