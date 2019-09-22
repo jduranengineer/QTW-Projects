@@ -10,7 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(rvest)
 library(tidyverse)
 library(mosaic)
-
+library(gmodels)
+library(knitr)
 ```
 
 
@@ -22,5 +23,57 @@ for(year in 2000:2014){
   data = read.csv(paste0("./MensResults",year,".csv"),stringsAsFactors = FALSE)
   mensResults = rbind(mensResults,data)
 }
-
+mensResults$Age = as.numeric(mensResults$Age)
+mensResults$Race = as.factor(mensResults$Race)
+head(mensResults)
 ```
+
+
+```{r}
+bwplot(Race ~Age,data=mensResults)
+```
+
+```{r}
+densityplot(~Age,groups = Race,data=mensResults)
+```
+
+## One-way ANOVA
+
+We fit the one way analysis of variance (ANOVA) model, using all of the groups.
+
+```{r}
+anova(lm(Age ~ Race, data=mensResults))
+```
+
+There is a strong statistically significant difference between the distribution of mens ages in the races. By default, the use of the linear model function displays the pairwise differences between the first group (Race 1999) and each of the other groups.
+
+
+```{r}
+summary(lm(Age~Race,data=mensResults))
+```
+
+## Pairwise Comparisons
+
+The model table below displays the differences between the grand mean and the group means.
+
+```{r, results='asis'}
+results = model.tables(aov(lm(Age ~ Race,data=mensResults)))
+results
+```
+
+## Residual Analysis
+
+```{r}
+aov1 = aov(lm(Age ~ Race, data=mensResults))
+plot(aov1,which=1)
+```
+
+```{r}
+plot(aov1,which=2)
+```
+
+
+```{r}
+plot(aov1,which=3)
+```
+
