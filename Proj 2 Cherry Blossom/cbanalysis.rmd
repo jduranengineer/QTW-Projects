@@ -58,7 +58,7 @@ histogram(~Age, data = mensResults)
 ```
 
 ```{r}
-smoothScatter(y = mensResults$Age, x = as.character(mensResults$Race),ylab = "Age (years)", xlab = "Race Year", main="Race Year v Participants Age for Mens Division")
+smoothScatter(y = mensResults$Age, x = as.character(mensResults$Race),ylab = "Age (years)", xlab = "Race Year", main=" Figure 4 - Smoothed Scatter of Race Year v Participant's Age")
 
 ```
 
@@ -78,7 +78,7 @@ densityplot(~Age,groups = Race,data=mensResults)
 anova(lm(Age ~ Race, data=mensResults))
 ```
 
-There is a strong statistically significant difference between the distribution of mens ages in the races. By default, the use of the linear model function displays the pairwise differences between the first group (Race 1999) and each of the other groups.
+The p-value provides some evidence that there ius a stistical difference between the mean age of participants over sucessive years of the race.  By default, the use of the linear model function displays the pairwise differences between the first group (Race 1999) and each of the other groups.
 
 
 ```{r}
@@ -111,5 +111,9 @@ plot(aov1,which=2)
 plot(aov1,which=3)
 ```
 
+
+```{r}
+dw = durbinWatsonTest(lm(Age ~ Race,data=mensResults))
+```
 
 
