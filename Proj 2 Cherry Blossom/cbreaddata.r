@@ -3,8 +3,10 @@ library(rvest)
 library(tidyverse)
 library(mosaic)
 
+# Default the URI to the URI of the mens overall results
 uri = "http://www.cballtimeresults.org/performances?utf8=%E2%9C%93&section=10M&&division=Overall+Men&year="
 
+# Loops over every page with data for the selected year
 getResults <- function(uri, year = 1999) 
 {
   page = 1
@@ -28,7 +30,7 @@ getResults <- function(uri, year = 1999)
   return (results);
 }
 
-
+# Loops over the years 1999 through 2014 and preserves each year's data in a csv file named MensResults{`year'}.csv
 getAll = function () {
 
   for (year in 1999:2014) {
