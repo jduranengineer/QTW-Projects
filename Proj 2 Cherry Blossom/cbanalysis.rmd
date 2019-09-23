@@ -20,7 +20,7 @@ library(RColorBrewer)
 ## Analysis
 
 ```{r}
-files = sapply(1999:2014,function(year){paste0("./MensResults",year,".csv")})
+files = sapply(1999:2012,function(year){paste0("./MensResults",year,".csv")})
 load.files = function(fileName) {
   read.csv(fileName,stringsAsFactors = FALSE)
 }
@@ -38,7 +38,7 @@ pander(head(mensResults))
 
 
 ```{r}
-plot(Time ~ age, data = mensResults, ylim = c(40, 180),
+plot(Time ~Age, data = mensResults, ylim = c(40, 180),
      xlab = "Age (years)", ylab = "Run Time (minutes)")
 ```
 
