@@ -30,7 +30,7 @@ mensResults = do.call(rbind,lapply(files, load.files))
 mensResults$Age = as.numeric(mensResults$Age)
 
 ## Convert to factor
-mensResults$Race = lapply(mensResults$Race,function(x) { r = strsplit(x, " ")}[[1]][1])
+mensResults$Race = sapply(mensResults$Race,function(x) { r = strsplit(x, " ")}[[1]][1])
 mensResults$Race = as.factor(mensResults$Race)
 
 pander(head(mensResults))
