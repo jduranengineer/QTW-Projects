@@ -14,48 +14,52 @@ library(gmodels)
 library(knitr)
 library(pander)
 library(RColorBrewer)
+library(lattice)
+library(xtable)
 ```
 
 
 ## Analysis
 
 ```{r}
+# Load data
 files = sapply(1999:2012,function(year){paste0("./MensResults",year,".csv")})
 load.files = function(fileName) {
   read.csv(fileName,stringsAsFactors = FALSE)
 }
 mensResults = do.call(rbind,lapply(files, load.files))
 
-## Convertto number
+## Convert to number
 mensResults$Age = as.numeric(mensResults$Age)
 
 ## Convert to factor
-mensResults$Race = sapply(mensResults$Race,function(x) { r = strsplit(x, " ")}[[1]][1])
+mensResults$Race = sapply(mensResults$Race,function(x) { 
+  r = strsplit(x, " ")[[1]][1]
+  return (r)
+})
 mensResults$Race = as.factor(mensResults$Race)
-
+mensResults = mensResults %>% select("Race","Name","Age")
 pander(head(mensResults))
 ```
 
 
 ```{r}
-plot(Time ~Age, data = mensResults, ylim = c(40, 180),
-     xlab = "Age (years)", ylab = "Run Time (minutes)")
+plot(Age ~Race, data = mensResults, ylab = "Age (years)", xlab = "Race")
 ```
 
 ```{r, results = 'asis'}
 stats = favstats(Age ~ Race,data=mensResults)
-pander(stats)
+print(stats, type="html")
 ```
 
 ```{r}
 bwplot(Race ~Age,data=mensResults)
+histogram(~Age, data = mensResults)
 ```
 
 ```{r}
+smoothScatter(y = mensResults$Age, x = as.character(mensResults$Race),ylab = "Age (years)", xlab = "Race Year", main="Race Year v Participants Age for Mens Division")
 
-smoothScatter(y = mensResults$Race, x = mensResults$Age,
-              
-              xlab = "Age (years)", ylab = "Race")
 ```
 
 ## One-way ANOVA
@@ -69,6 +73,7 @@ densityplot(~Age,data=mensResults)
 ```{r}
 densityplot(~Age,groups = Race,data=mensResults)
 ```
+
 ```{r}
 anova(lm(Age ~ Race, data=mensResults))
 ```
@@ -89,6 +94,7 @@ results = model.tables(aov(lm(Age ~ Race,data=mensResults)))
 results
 ```
 
+
 ## Residual Analysis
 
 ```{r}
@@ -104,4 +110,6 @@ plot(aov1,which=2)
 ```{r}
 plot(aov1,which=3)
 ```
+
+
 
