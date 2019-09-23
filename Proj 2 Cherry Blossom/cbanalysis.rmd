@@ -12,10 +12,9 @@ library(tidyverse)
 library(mosaic)
 library(gmodels)
 library(knitr)
-library(pander)
 library(RColorBrewer)
 library(lattice)
-library(xtable)
+library(car)
 ```
 
 
@@ -39,7 +38,7 @@ mensResults$Race = sapply(mensResults$Race,function(x) {
 })
 mensResults$Race = as.factor(mensResults$Race)
 mensResults = mensResults %>% select("Race","Name","Age")
-pander(head(mensResults))
+head(mensResults)
 ```
 
 
@@ -113,7 +112,9 @@ plot(aov1,which=3)
 
 
 ```{r}
-dw = durbinWatsonTest(lm(Age ~ Race,data=mensResults))
+#dw = durbinWatsonTest(lm(Age ~ Race,data=mensResults))
+p <- ggplot(mensResults, aes(length, fill = )) + geom_density(alpha = 0.2)
+p <- ggplotly(p)
 ```
 
 
