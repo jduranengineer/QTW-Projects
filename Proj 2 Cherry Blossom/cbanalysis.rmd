@@ -91,7 +91,7 @@ The model table below displays the differences between the grand mean and the gr
 
 ```{r, results='asis'}
 results = model.tables(aov(lm(Age ~ Race,data=mensResults)))
-results
+results$tables
 ```
 
 
@@ -99,7 +99,7 @@ results
 
 ```{r}
 aov1 = aov(lm(Age ~ Race, data=mensResults))
-plot(aov1,which=1)
+plot(aov1,which=1,"Figure 5 - Residuals vs Fitted")
 ```
 
 ```{r}
