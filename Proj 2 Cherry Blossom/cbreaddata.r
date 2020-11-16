@@ -5,7 +5,7 @@ uri = "http://www.cballtimeresults.org/performances?utf8=%E2%9C%93&section=10M&&
 
 # Loops over every page with data for the selected year
 #   uri - Web address of data source
-#   year - Sets teh query string parameter to the specified year
+#   year - Sets the query string parameter to the specified year
 getResults <- function(uri, year = 1999) 
 {
   page = 1
